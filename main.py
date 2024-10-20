@@ -1,4 +1,17 @@
+from fastapi import FastAPI
+from app.api import endpoints
 
+app = FastAPI()
+
+# Incluir los endpoints de la aplicación
+app.include_router(endpoints.router)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+'''
 from fastapi import FastAPI
 from pydantic import BaseModel
 from cachetools import TTLCache
@@ -47,3 +60,5 @@ async def ask_question(data: Question):
     chunk_relevante = buscar_chunk_relevante(data.question)
     respuesta = generar_respuesta(data.question, chunk_relevante)
     return {"user_name": data.user_name, "response": respuesta}
+
+'''
