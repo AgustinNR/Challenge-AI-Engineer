@@ -7,7 +7,6 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.documents import Document
 from langchain_community.utils.math import cosine_similarity
-from typing import List, Dict, Any
 from dotenv import load_dotenv
 import os
 from pathlib import Path
@@ -106,7 +105,7 @@ def detect_lang(query: str):
 
 
 # Definir la función para ejecutar el LLM con RAG utilizando Chroma
-def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
+def run_llm(query: str):
     # Cargar el vectorstore persistente de Chrom
     docsearch = load_or_create_vectorstore()
     
@@ -165,7 +164,7 @@ question_store = Chroma(
 )
 
 
-def get_response(query, chat_history: List[Dict[str, Any]] = []):
+def get_response(query):
 
     question_retriever = question_store.similarity_search(query, k=1)
 
@@ -180,16 +179,17 @@ def get_response(query, chat_history: List[Dict[str, Any]] = []):
             return question_retriever[0].page_content
     
     # Si no hay respuesta en caché, genera una nueva
-    new_response = run_llm(query, chat_history)  # Implementa esta función según tu lógica
+    new_response = run_llm(query)  # Implementa esta función según tu lógica
     
     # Almacena la nueva pregunta, su embedding y la respuesta
     question_store.add_documents([Document(page_content=new_response, metadata={"question": query})])
     
     return new_response
 
+'''
 # Ejemplo de uso
 if __name__ == "__main__":
     query = "Who is Alex?"
-    chat_history = []  # Histórico de chats, si hay
-    response = get_response(query, chat_history)
+    response = get_response(query)
     print(response)
+'''
