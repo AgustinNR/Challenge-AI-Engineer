@@ -1,13 +1,13 @@
 
-# Challenge AI Engineer
+# Challenge AI Engineer 🌟
 
 ## Descripción
 
-Este proyecto es una solución simple de tipo RAG (retrieved augmented generation) que permite interactuar con un modelo de lenguaje (LLM) a través de una API. El objetivo es generar respuestas a preguntas formuladas por el usuario sobre un documento específico.
+Este proyecto es una solución simple de tipo RAG (retrieved augmented generation) que permite interactuar con un modelo de lenguaje (LLM) a través de una API. El objetivo es generar respuestas a preguntas formuladas por el usuario sobre un documento específico. 📄 En este caso, la base de conocimiento es un documento que contiene 5 historias cortas que puedes encontrar aquí: [/data/documents](./data/documents).
 
 ## Objetivo
 
-Desarrollar una API que permita a los usuarios enviar preguntas y recibir respuestas basadas en un contexto proporcionado por un documento.
+Desarrollar una API que permita a los usuarios enviar preguntas y recibir respuestas basadas en un contexto proporcionado por un documento. 🤖✨
 
 ## Componentes
 
@@ -21,28 +21,21 @@ Desarrollar una API que permita a los usuarios enviar preguntas y recibir respue
    }
    ```
 
-2. **LLM**: Utiliza una API de LLM (como OpenAI o Cohere) para responder a las preguntas del usuario.
+2. **LLM**: Utiliza una API de LLM, específicamente el modelo "gpt-4o" de OpenAI, para responder a las preguntas del usuario. 🌐
 
-3. **Embeddings**: El documento se divide en "chunks" para ser codificados y almacenados en una base de datos vectorial (ej. ChromaDB). Al recibir una pregunta, se codifica y busca el chunk más relevante para proporcionar contexto al LLM.
+3. **Embeddings**: El documento se divide en "chunks" mediante el modelo "text-embedding-3-small" de OpenAI para ser codificados y almacenados en una base de datos vectorial de ChromaDB. Al recibir una pregunta, se codifica y busca el chunk más relevante para proporcionar contexto al LLM. 📚
 
 4. **Prompt**: El prompt enviado al LLM incluye la pregunta del usuario, el contexto y cualquier otro elemento necesario para cumplir con los requisitos de respuesta.
 
-## Requisitos de Respuesta
+## Requisitos de Respuesta para el Challenge
 
-- Respuestas consistentes para la misma pregunta.
-- Respuestas en una sola oración.
-- Idioma de respuesta igual al de la pregunta.
-- Inclusión de emojis que resuman el contenido.
-- Respuestas siempre en tercera persona.
+- Respuestas consistentes para la misma pregunta. 🔄
+- Respuestas en una sola oración. ✍️
+- Idioma de respuesta igual al de la pregunta. 🌍
+- Inclusión de emojis que resuman el contenido. 😄
+- Respuestas siempre en tercera persona. 🗣️
 
-## Pruebas
-
-El sistema debe responder correctamente a preguntas como:
-- ¿Quién es Zara?
-- What did Emma decide to do?
-- What is the name of the magical flower?
-
-## Instalación
+## Instalación (sin Docker) 🚀
 
 1. Clona este repositorio:
    ```bash
@@ -62,26 +55,28 @@ El sistema debe responder correctamente a preguntas como:
    uvicorn main:app --reload
    ```
 
-4. Accede a la documentación de la API en `http://localhost:8000/docs` para probar los endpoints.
+4. Accede a la documentación de la API en `http://localhost:7000/docs` para probar los endpoints. 📖
 
-## Docker
+## Docker 🐳
 
 Para ejecutar la API en un contenedor Docker, se proporciona un Dockerfile. Sigue estos pasos:
 
 1. Construye la imagen:
    ```bash
-   docker build -t ai-engineer .
+   docker build -t rag-challenge .
    ```
 
 2. Ejecuta el contenedor:
    ```bash
-   docker run -p 8000:8000 ai-engineer
+   docker run -p 7000:7000 rag-challenge
    ```
 
-## Contribuciones
 
-Las contribuciones son bienvenidas. Si deseas colaborar, por favor abre un issue o envía un pull request.
+## Pruebas 🧪
 
-## Licencia
+Una vez instalada y ejecutada la API, puedes acceder al Swagger de la API en `http://localhost:7000/docs` para probar los endpoints. Por ejemplo, prueba las siguientes preguntas:
+- ¿Quién es Zara? 🤔
+- What did Emma decide to do? ❓
+- What is the name of the magical flower? 🌸
 
-Este proyecto está licenciado bajo la [MIT License](LICENSE).
+¡Diviértete explorando y haciendo preguntas! 🎉
