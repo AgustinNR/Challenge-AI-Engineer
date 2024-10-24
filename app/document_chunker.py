@@ -69,25 +69,63 @@ def load_or_create_vectorstore():
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
+
+# Definir la función para detectar idioma de la query
+def detect_lang(query: str):
+
+    # Inicializar el LLM (ChatOpenAI) para la generación de respuestas
+    llm = ChatOpenAI(model_name="gpt-4o", verbose=True, temperature=0)
+
+    # Crear un prompt personalizado con las instrucciones deseadas
+    custom_prompt = PromptTemplate(
+        input_variables=["input"],
+        template=(
+            "Based on the language of the following question, respond only with the name of that language: {input}\n"  
+            "Provide a one-word response only.\n"
+        )
+    )
+
+    # Crear un parser para convertir la respuesta del LLM en cadena de texto
+    output_parser = StrOutputParser()
+
+    # Definir el RAG chain (retrieval-augmented generation)
+    chain = (
+        {"input": RunnablePassthrough()}
+        | custom_prompt                         # Pipe the prompt with context and input
+        | llm                                   # Run the LLM on the custom prompt
+        | output_parser                         # Parse the LLM output to a string
+    )
+
+    # Ejecutar la consulta y obtener el resultado
+    language = chain.invoke({
+        "input": query                 # Provide the actual input (query)
+    })
+
+    print(language)
+    return language
+
+
 # Definir la función para ejecutar el LLM con RAG utilizando Chroma
 def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
     # Cargar el vectorstore persistente de Chrom
     docsearch = load_or_create_vectorstore()
     
     # Inicializar el LLM (ChatOpenAI) para la generación de respuestas
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", verbose=True, temperature=0)
- 
+    llm = ChatOpenAI(model_name="gpt-4o", verbose=True, temperature=0)
+
+    language = detect_lang(query=query)
+
     # Crear un prompt personalizado con las instrucciones deseadas
     custom_prompt = PromptTemplate(
-        input_variables=["context", "input"],
+        input_variables=["context", "input", "language"],
         template=(
             "Contexto relevante: {context}\n"
             "Pregunta: {input}\n\n"
             "Responde la siguiente pregunta respetando las siguientes reglas:\n"
             "- Responde en solo una oración.\n"
-            "- Usa el mismo idioma en el que se hizo la pregunta.\n"
             "- Agrega emojis que resuman el contenido de la respuesta.\n"
-            "- Responde siempre en tercera persona.\n\n"
+            "- Responde siempre en tercera persona.\n"
+            "- Rensponde la pregunta en el siguiente idioma: {language}.\n\n"
             "Respuesta:"
         )
     )
@@ -103,7 +141,8 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
     rag_chain = (
         {  # Ensure context and input are passed correctly
             "context": RunnablePassthrough(),  # Make "context" a passthrough Runnable
-            "input": RunnablePassthrough(),    # Make "input" a passthrough Runnable
+            "input": RunnablePassthrough(),
+            "language": RunnablePassthrough()    # Make "input" a passthrough Runnable
         }
         | custom_prompt                         # Pipe the prompt with context and input
         | llm                                   # Run the LLM on the custom prompt
@@ -111,15 +150,17 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
     )
 
     # Ejecutar la consulta y obtener el resultado
-    result = rag_chain.invoke({
+    result = rag_chain.invoke(
+        {
         "context": retrieved_context,  # Provide the actual context retrieved
-        "input": query                 # Provide the actual input (query)
+        "input": query,
+        "language": language                 # Provide the actual input (query)
     })
     return result
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    query = "¿Who is Zara?"
+    query = "Who is Zara?"
     chat_history = []  # Histórico de chats, si hay
     response = run_llm(query, chat_history)
     print(response)
