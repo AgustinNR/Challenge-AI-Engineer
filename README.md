@@ -11,7 +11,7 @@ Desarrollar una API que permita a los usuarios enviar preguntas y recibir respue
 
 ## Componentes
 
-1. **API**: Desarrollada en Python utilizando FastAPI, que funciona como intermediario entre el usuario y el LLM.
+1. **API**: Desarrollada en Python utilizando [FastAPI](https://fastapi.tiangolo.com/), que funciona como intermediario entre el usuario y el LLM.
    
    **Estructura del Request**:
    ```json
@@ -21,11 +21,11 @@ Desarrollar una API que permita a los usuarios enviar preguntas y recibir respue
    }
    ```
 
-3. **Framework**: Utiliza Langchain 🦜🔗, una biblioteca que facilita la creación de aplicaciones de inteligencia artificial. Permite integrar modelos de lenguaje, gestionar flujos de trabajo y conectar con bases de datos y APIs. Además, ofrece herramientas para construir prompts dinámicos y encadenar llamadas a modelos, simplificando el desarrollo y mejorando la escalabilidad.
+3. **Framework**: Utiliza [Langchain](https://python.langchain.com/docs/introduction/) 🦜🔗, una biblioteca que facilita la creación de aplicaciones de inteligencia artificial. Permite integrar modelos de lenguaje, gestionar flujos de trabajo y conectar con bases de datos y APIs. Además, ofrece herramientas para construir prompts dinámicos y encadenar llamadas a modelos, simplificando el desarrollo y mejorando la escalabilidad.
 
-3. **LLM**: Se comunica con el LLM mediante la API de OpenAI, específicamente utiliza el modelo ["gpt-4o"](https://platform.openai.com/docs/models/gpt-4o), para responder a las preguntas del usuario. 🌐
+3. **LLM**: Se comunica con el LLM mediante la API de OpenAI, específicamente utiliza el modelo [gpt-4o](https://platform.openai.com/docs/models/gpt-4o), para responder a las preguntas del usuario. 🌐
 
-4. **Embeddings**: El documento se divide en "chunks" mediante el modelo "text-embedding-3-small" de OpenAI para ser codificados y almacenados en una base de datos vectorial de ChromaDB. Al recibir una pregunta, se codifica y busca el chunk más relevante para proporcionar contexto al LLM. 📚
+4. **Embeddings**: El documento se divide en "chunks" mediante el modelo [text-embedding-3-small](https://platform.openai.com/docs/guides/embeddings/embedding-models) de OpenAI para ser codificados y almacenados en una base de datos vectorial de ChromaDB. Al recibir una pregunta, se codifica y busca el chunk más relevante para proporcionar contexto al LLM. 📚
 
 5. **Prompt**: El prompt enviado al LLM incluye la pregunta del usuario, el contexto y cualquier otro elemento necesario para cumplir con los requisitos de respuesta.
 
@@ -61,7 +61,7 @@ Desarrollar una API que permita a los usuarios enviar preguntas y recibir respue
 
 ## Docker 🐳
 
-Para ejecutar la API en un contenedor Docker, se proporciona un Dockerfile. Sigue estos pasos:
+Para ejecutar la API en un contenedor [Docker](https://docs.docker.com/), se proporciona un Dockerfile. Sigue estos pasos:
 
 1. Construye la imagen:
    ```bash
@@ -77,8 +77,7 @@ Para ejecutar la API en un contenedor Docker, se proporciona un Dockerfile. Sigu
 ## Pruebas 🧪
 
 Una vez instalada y ejecutada la API, puedes acceder al Swagger de la API en `http://localhost:7000/docs` para probar los endpoints. Por ejemplo, prueba las siguientes preguntas:
-- ¿Quién es Zara? 🤔
-- What did Emma decide to do? ❓
-- What is the name of the magical flower? 🌸
+- ¿Quién es Zara?
+- What did Emma decide to do? 
+- What is the name of the magical flower? 
 
-¡Diviértete explorando y haciendo preguntas! 🎉
