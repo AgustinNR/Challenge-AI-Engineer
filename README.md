@@ -42,16 +42,16 @@ Desarrollar una API que permita a los usuarios enviar preguntas y recibir respue
 Asegúrate de que tu archivo `.env` contenga las siguientes variables:
 
 ```bash
-OPENAI_API_KEY=your_api_key
+OPENAI_API_KEY=<your_api_key>
 
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
-LANGCHAIN_API_KEY=your_api_key
+LANGCHAIN_API_KEY=<your_api_key>
 LANGCHAIN_PROJECT="ai-challenge"
 ```
 
 
-Reemplaza `your_api_key` con tus claves de API correspondientes. La clave de **OpenAI** es esencial para que la aplicación funcione correctamente, mientras que la clave de **LangSmith** es interesante para ver el trazado de las llamadas y mejorar la supervisión del rendimiento de las interacciones con el modelo.
+Reemplaza `<your_api_key>` con tus claves de API correspondientes. La clave de [**OpenAI**](https://platform.openai.com/docs/overview) es esencial para que la aplicación funcione correctamente, mientras que la clave de [**LangSmith**](https://www.langchain.com/langsmith) es interesante para ver el trazado de las llamadas y mejorar la supervisión del rendimiento de las interacciones con el modelo.
 
 
 ## Instalación (sin Docker) 🚀
