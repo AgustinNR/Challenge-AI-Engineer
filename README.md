@@ -3,7 +3,7 @@
 
 ## Descripción
 
-Este proyecto es una solución simple de tipo RAG (retrieved augmented generation) que permite interactuar con un modelo de lenguaje (LLM) a través de una API. El objetivo es generar respuestas a preguntas formuladas por el usuario sobre un documento específico. 📄 En este caso, la base de conocimiento es un documento que contiene 5 historias cortas que puedes encontrar aquí: [/data/documents](./data/documents).
+Este proyecto es una solución simple de tipo RAG (retrieved augmented generation) que permite interactuar con un modelo de lenguaje (LLM) a través de una API. El objetivo es generar respuestas a preguntas formuladas por el usuario sobre un documento específico. 📄 En este caso, la base de conocimiento es un documento que contiene 5 historias cortas que puedes encontrar en: [/data/](./data/documento.docx).
 
 ## Objetivo
 
