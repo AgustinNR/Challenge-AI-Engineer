@@ -37,6 +37,24 @@ Desarrollar una API que permita a los usuarios enviar preguntas y recibir respue
 - Inclusión de emojis que resuman el contenido. 😄
 - Respuestas siempre en tercera persona. 🗣️
 
+## Configuración del archivo .env 🛠️
+
+Asegúrate de que tu archivo `.env` contenga las siguientes variables:
+
+```bash
+OPENAI_API_KEY=your_api_key
+
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
+LANGCHAIN_API_KEY=your_api_key
+LANGCHAIN_PROJECT="ai-challenge"
+```
+
+
+Reemplaza `your_api_key` con tus claves de API correspondientes. La clave de **OpenAI** es esencial para que la aplicación funcione correctamente, mientras que la clave de **LangSmith** es interesante para ver el trazado de las llamadas y mejorar la supervisión del rendimiento de las interacciones con el modelo.
+
+
+
 ## Instalación (sin Docker) 🚀
 
 1. Clona este repositorio:
