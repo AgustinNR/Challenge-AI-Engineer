@@ -77,7 +77,7 @@ def detect_lang(query: str):
     llm = ChatOpenAI(model_name="gpt-4o", verbose=True, temperature=0)
 
     # Crear un prompt personalizado con las instrucciones deseadas
-    custom_prompt = PromptTemplate(
+    leng_prompt = PromptTemplate(
         input_variables=["input"],
         template=(
             "Based on the language of the following question, respond only with the name of that language: {input}\n"  
@@ -91,7 +91,7 @@ def detect_lang(query: str):
     # Definir el RAG chain (retrieval-augmented generation)
     chain = (
         {"input": RunnablePassthrough()}
-        | custom_prompt                         # Pipe the prompt with context and input
+        | leng_prompt                         # Pipe the prompt with context and input
         | llm                                   # Run the LLM on the custom prompt
         | output_parser                         # Parse the LLM output to a string
     )
@@ -117,16 +117,19 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
 
     # Crear un prompt personalizado con las instrucciones deseadas
     custom_prompt = PromptTemplate(
-        input_variables=["context", "input", "language"],
+        input_variables=["context","input","language"],
         template=(
-            "Contexto relevante: {context}\n"
-            "Pregunta: {input}\n\n"
-            "Responde la siguiente pregunta respetando las siguientes reglas:\n"
-            "- Responde en solo una oración.\n"
-            "- Agrega emojis que resuman el contenido de la respuesta.\n"
-            "- Responde siempre en tercera persona.\n"
-            "- Rensponde la pregunta en el siguiente idioma: {language}.\n\n"
-            "Respuesta:"
+            "Relevant context: {context}\n"
+            "Question: {input}\n\n"
+            "Answer the following question while following these rules:\n"
+            "- Respond in only one sentence.\n"
+            "- Include emojis that summarize the content of the answer.\n"
+            "- The response must be in third person only.\n"
+            "- The response should be concise and clear.\n"
+            "- Include any necessary details while remaining in third person.\n"
+            "- Avoid using any first-person pronouns."
+            "- Provide the answer in the following language: {language}.\n\n"
+            "Answer:"
         )
     )
 
@@ -139,11 +142,7 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
 
     # Definir el RAG chain (retrieval-augmented generation)
     rag_chain = (
-        {  # Ensure context and input are passed correctly
-            "context": RunnablePassthrough(),  # Make "context" a passthrough Runnable
-            "input": RunnablePassthrough(),
-            "language": RunnablePassthrough()    # Make "input" a passthrough Runnable
-        }
+        RunnablePassthrough()  # Use RunnablePassthrough
         | custom_prompt                         # Pipe the prompt with context and input
         | llm                                   # Run the LLM on the custom prompt
         | output_parser                         # Parse the LLM output to a string
@@ -152,15 +151,16 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
     # Ejecutar la consulta y obtener el resultado
     result = rag_chain.invoke(
         {
-        "context": retrieved_context,  # Provide the actual context retrieved
-        "input": query,
-        "language": language                 # Provide the actual input (query)
-    })
+            "context": retrieved_context,
+            "input": query,
+            "language": language
+        }
+    )
     return result
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    query = "Who is Zara?"
+    query = "Hola Alex, quien sos?"
     chat_history = []  # Histórico de chats, si hay
     response = run_llm(query, chat_history)
     print(response)
