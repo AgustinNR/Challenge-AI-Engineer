@@ -3,7 +3,7 @@
 
 ## Descripción
 
-Este proyecto es una solución simple de tipo RAG (retrieved augmented generation) que permite interactuar con un modelo de lenguaje (LLM) a través de una API. El objetivo es generar respuestas a preguntas formuladas por el usuario sobre un documento específico. 📄 En este caso, la base de conocimiento es un documento que contiene 5 historias cortas que puedes encontrar en: [/data/](./data/documento.docx).
+Este proyecto es una solución simple de tipo RAG (retrieved augmented generation) que permite interactuar con un modelo de lenguaje (LLM) a través de una API. El objetivo es generar respuestas a preguntas formuladas por el usuario sobre un documento específico. 📄 En este caso, la base de conocimiento es un documento que contiene 5 historias cortas que puedes encontrar en: [/data/documento.docx](./data/).
 
 ## Objetivo
 
@@ -21,11 +21,13 @@ Desarrollar una API que permita a los usuarios enviar preguntas y recibir respue
    }
    ```
 
-2. **LLM**: Utiliza una API de LLM, específicamente el modelo "gpt-4o" de OpenAI, para responder a las preguntas del usuario. 🌐
+3. **Framework**: Utiliza Langchain 🦜🔗, una biblioteca que facilita la creación de aplicaciones de inteligencia artificial. Permite integrar modelos de lenguaje, gestionar flujos de trabajo y conectar con bases de datos y APIs. Además, ofrece herramientas para construir prompts dinámicos y encadenar llamadas a modelos, simplificando el desarrollo y mejorando la escalabilidad.
 
-3. **Embeddings**: El documento se divide en "chunks" mediante el modelo "text-embedding-3-small" de OpenAI para ser codificados y almacenados en una base de datos vectorial de ChromaDB. Al recibir una pregunta, se codifica y busca el chunk más relevante para proporcionar contexto al LLM. 📚
+3. **LLM**: Se comunica con el LLM mediante la API de OpenAI, específicamente utiliza el modelo ["gpt-4o"](https://platform.openai.com/docs/models/gpt-4o), para responder a las preguntas del usuario. 🌐
 
-4. **Prompt**: El prompt enviado al LLM incluye la pregunta del usuario, el contexto y cualquier otro elemento necesario para cumplir con los requisitos de respuesta.
+4. **Embeddings**: El documento se divide en "chunks" mediante el modelo "text-embedding-3-small" de OpenAI para ser codificados y almacenados en una base de datos vectorial de ChromaDB. Al recibir una pregunta, se codifica y busca el chunk más relevante para proporcionar contexto al LLM. 📚
+
+5. **Prompt**: El prompt enviado al LLM incluye la pregunta del usuario, el contexto y cualquier otro elemento necesario para cumplir con los requisitos de respuesta.
 
 ## Requisitos de Respuesta para el Challenge
 
