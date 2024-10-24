@@ -90,14 +90,14 @@ def detect_lang(query: str):
     # Definir el RAG chain (retrieval-augmented generation)
     chain = (
         {"input": RunnablePassthrough()}
-        | leng_prompt                         # Pipe the prompt with context and input
-        | llm                                   # Run the LLM on the custom prompt
-        | output_parser                         # Parse the LLM output to a string
+        | leng_prompt                         
+        | llm                                  
+        | output_parser                     
     )
 
     # Ejecutar la consulta y obtener el resultado
     language = chain.invoke({
-        "input": query                 # Provide the actual input (query)
+        "input": query                
     })
 
     print(language)
@@ -139,12 +139,12 @@ def run_llm(query: str):
     retriever = docsearch.similarity_search(query, k=1)
     retrieved_context = retriever[0].page_content if retriever else "No relevant context found."
 
-    # Definir el RAG chain (retrieval-augmented generation)
+    # Definir el RAG chain
     rag_chain = (
-        RunnablePassthrough()  # Use RunnablePassthrough
-        | custom_prompt                         # Pipe the prompt with context and input
-        | llm                                   # Run the LLM on the custom prompt
-        | output_parser                         # Parse the LLM output to a string
+        RunnablePassthrough()  
+        | custom_prompt                         
+        | llm                                   
+        | output_parser                         
     )
 
     # Ejecutar la consulta y obtener el resultado
@@ -157,6 +157,7 @@ def run_llm(query: str):
     )
     return result
 
+# Crear la vectorDB para las preguntas
 question_store = Chroma(
     collection_name="questions",
     embedding_function=emb,
@@ -166,8 +167,10 @@ question_store = Chroma(
 
 def get_response(query):
 
+    # Obtiene la pregunta almacenada más similar
     question_retriever = question_store.similarity_search(query, k=1)
 
+    # Crea los embedings de las preguntas y la pregunta almacenada más similar
     query_embedding = emb.embed_query(query)
     question_retriever_embedding = emb.embed_query(question_retriever[0].metadata['question'])
 
@@ -179,17 +182,9 @@ def get_response(query):
             return question_retriever[0].page_content
     
     # Si no hay respuesta en caché, genera una nueva
-    new_response = run_llm(query)  # Implementa esta función según tu lógica
+    new_response = run_llm(query)  
     
-    # Almacena la nueva pregunta, su embedding y la respuesta
+    # Almacena la nueva pregunta y su respuesta
     question_store.add_documents([Document(page_content=new_response, metadata={"question": query})])
     
     return new_response
-
-'''
-# Ejemplo de uso
-if __name__ == "__main__":
-    query = "Who is Alex?"
-    response = get_response(query)
-    print(response)
-'''
