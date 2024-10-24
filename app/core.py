@@ -76,7 +76,7 @@ def detect_lang(query: str):
     llm = ChatOpenAI(model_name="gpt-4o", verbose=True, temperature=0)
 
     # Crear un prompt personalizado con las instrucciones deseadas
-    leng_prompt = PromptTemplate(
+    lang_prompt = PromptTemplate(
         input_variables=["input"],
         template=(
             "Based on the language of the following question, respond only with the name of that language: {input}\n"  
@@ -90,7 +90,7 @@ def detect_lang(query: str):
     # Definir el RAG chain (retrieval-augmented generation)
     chain = (
         {"input": RunnablePassthrough()}
-        | leng_prompt                         
+        | lang_prompt                         
         | llm                                  
         | output_parser                     
     )
