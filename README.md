@@ -54,7 +54,6 @@ LANGCHAIN_PROJECT="ai-challenge"
 Reemplaza `your_api_key` con tus claves de API correspondientes. La clave de **OpenAI** es esencial para que la aplicación funcione correctamente, mientras que la clave de **LangSmith** es interesante para ver el trazado de las llamadas y mejorar la supervisión del rendimiento de las interacciones con el modelo.
 
 
-
 ## Instalación (sin Docker) 🚀
 
 1. Clona este repositorio:
