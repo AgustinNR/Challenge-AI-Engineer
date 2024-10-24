@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from document_chunker import run_llm
+from app.core import get_response
 
 app = FastAPI()
 
@@ -12,7 +12,7 @@ class UserQuestion(BaseModel):
 async def ask_question(query: UserQuestion):
     try:
         chat_history = []  # Histórico de chats, si hay
-        response = run_llm(query.question, chat_history)
+        response = get_response(query.question, chat_history)
         return {"response": response}
     
     except Exception as e:

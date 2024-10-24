@@ -10,3 +10,4 @@ chromadb==0.3.21
 pytest==7.1.2
 python-dotenv==0.21.0
 docx2txt
+scikit-learn

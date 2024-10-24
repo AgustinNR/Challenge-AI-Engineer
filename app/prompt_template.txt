@@ -1,4 +1,0 @@
-Pregunta del usuario: {user_question}
-Contexto relevante: {context_chunk}
-
-Por favor, responde en {language}, en una sola oración, usando tercera persona y emojis que resuman el contenido de la respuesta.
