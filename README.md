@@ -25,7 +25,7 @@ Desarrollar una API que permita a los usuarios enviar preguntas y recibir respue
 
 3. **LLM**: Se comunica con el LLM mediante la API de OpenAI, específicamente utiliza el modelo [gpt-4o](https://platform.openai.com/docs/models/gpt-4o), para responder a las preguntas del usuario. 🌐
 
-4. **Embeddings**: El documento se divide en "chunks" mediante el modelo [text-embedding-3-small](https://platform.openai.com/docs/guides/embeddings/embedding-models) de OpenAI para ser codificados y almacenados en una base de datos vectorial de ChromaDB. Al recibir una pregunta, se codifica y busca el chunk más relevante para proporcionar contexto al LLM. 📚
+4. **Embeddings**: El documento se divide en "chunks" y mediante el modelo [text-embedding-3-small](https://platform.openai.com/docs/guides/embeddings/embedding-models) de OpenAI, estos se vectorizan y almacenan en una base de datos vectorial de ChromaDB. Al recibir una pregunta, se codifica y busca el chunk más relevante para proporcionar contexto al LLM. 📚
 
 5. **Prompt**: El prompt enviado al LLM incluye la pregunta del usuario, el contexto y cualquier otro elemento necesario para cumplir con los requisitos de respuesta.
 
